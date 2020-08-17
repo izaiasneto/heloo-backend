@@ -22,6 +22,6 @@ requireDir('./src/models')
 // Rotas
 app.use('/', require('./src/routes'))
 
-app.listen(process.env.PORT || 3001, function(){
+app.listen(process.env.PORT || 8080, function(){
     console.log('listening on', http.address().port);
   });
