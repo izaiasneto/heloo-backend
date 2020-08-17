@@ -1,3 +1,5 @@
+require("dotenv").config()
+
 const express = require("express")
 const cors = require('cors')
 const mongoose = require("mongoose")
@@ -9,7 +11,7 @@ app.use(express.json()) //permitir que eu envie dados para aplicação em format
 app.use(cors())
 
 // Iniciando o DB
-mongoose.connect('mongodb://localhost:27017/grcupomapi', { 
+mongoose.connect(process.env.MONGO_URL, { 
     useCreateIndex: true,
     useUnifiedTopology: true,
     useNewUrlParser: true
@@ -20,4 +22,4 @@ requireDir('./src/models')
 // Rotas
 app.use('/', require('./src/routes'))
 
-app.listen(3001)
+app.listen(process.env.PORT || 3001)
