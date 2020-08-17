@@ -11,7 +11,7 @@ app.use(express.json()) //permitir que eu envie dados para aplicação em format
 app.use(cors())
 
 // Iniciando o DB
-mongoose.connect('mongodb+srv://izaiasneto:ZBXh3VyqvqORG9RI@cluster0.2nldu.mongodb.net/<dbname>?retryWrites=true&w=majority', { 
+mongoose.connect(MONGO_URL, { 
     useCreateIndex: true,
     useUnifiedTopology: true,
     useNewUrlParser: true
