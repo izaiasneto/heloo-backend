@@ -3,7 +3,7 @@ const cors = require('cors')
 const mongoose = require("mongoose")
 const requireDir = require("require-dir")
 
-MONGO_URL = 'mongodb://localhost:27017/grcupomapi'
+var MONGO_URL = process.env.MONGO_URL  || 'mongodb://localhost:27017/grcupomapi'
 
 //iniciando o APP
 const app = express()
@@ -22,6 +22,4 @@ requireDir('./src/models')
 // Rotas
 app.use('/', require('./src/routes'))
 
-app.listen(process.env.PORT || 8080, function(){
-    console.log('listening on', http.address().port);
-  });
+app.listen(process.env.PORT || 3001)
