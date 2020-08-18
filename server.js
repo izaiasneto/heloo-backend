@@ -26,11 +26,10 @@ requireDir('./src/models')
 // Rotas
 app.use('/', require('./src/routes'))
 
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    next();
-});
+app.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");  
+app.header("Access-Control-Allow-Methods", "PATCH, POST, GET, PUT, DELETE, OPTIONS");
+if ('OPTIONS' === req.method) { 
+  return res.send(200);
+}
 
 app.listen(process.env.PORT || 3001)
