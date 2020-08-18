@@ -7,7 +7,6 @@ var MONGO_URL = process.env.MONGO_URL
 
 var app = express();
 
-
 mongoose.set('useFindAndModify', false);
 
 // Iniciando o DB
@@ -19,6 +18,9 @@ mongoose.connect(MONGO_URL, {
 
 
 app.use(cors());
+app.options('/cupons', (req, res) => {
+    res.sendStatus(204);
+});
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
