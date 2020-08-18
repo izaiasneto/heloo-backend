@@ -9,16 +9,16 @@ var app = express();
 app.use(express.json())
 
 // CORS
-app.all("*", (req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Content-type, Accept, X-Access-Token, X-Key"
-    );
-    if ("OPTIONS" == req.method) res.status(200).end();
-    else next();
-});
+app.all('/*', function(request, response, next) {
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+    response.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+    if (request.method == 'OPTIONS') {
+      response.status(200).end();
+    } else {
+      next();
+    }
+  });
 
 mongoose.set('useFindAndModify', false);
 
@@ -29,7 +29,7 @@ mongoose.connect(MONGO_URL, {
     useNewUrlParser: true
 })
 
-app.use(cors());
+
 
 requireDir('./src/models')
 
