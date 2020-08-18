@@ -9,6 +9,7 @@ var MONGO_URL = process.env.MONGO_URL  || 'mongodb://localhost:27017/grcupomapi'
 const app = express()
 app.use(express.json()) //permitir que eu envie dados para aplicação em formato de json.
 app.use(cors())
+mongoose.set('useFindAndModify', false);
 
 // Iniciando o DB
 mongoose.connect(MONGO_URL, { 
