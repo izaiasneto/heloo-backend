@@ -64,6 +64,7 @@ module.exports = {
         return res.json(cupons)
     },
 
+    
     async store(req, res) {
         
         if(req.body.situation === 'Usado'  ){
@@ -77,12 +78,14 @@ module.exports = {
         const dateNew = convertDate(req.body.date_max)
             req.body.date_max = moment(new Date(dateNew)).format('YYYY-MM-DD')
 
-           
+        try{      
 
             const cupom = await Cupom.create(req.body)
 
-            return res.json(cupom)
-        
+            return res.send({cupom})
+        } catch (err) {
+            console.log(err)
+        }
     },
 
     async update(req, res) {
@@ -95,7 +98,7 @@ module.exports = {
         }
         try {
             const cupom = await Cupom.findByIdAndUpdate(req.params._id, req.body, { new: true})
-            return res.json(cupom)
+            return res.send({cupom})
         } catch (err) {
             console.log(err)
         }
