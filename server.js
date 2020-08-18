@@ -3,12 +3,12 @@ const cors = require('cors')
 const mongoose = require("mongoose")
 const requireDir = require("require-dir")
 
-var MONGO_URL = process.env.MONGO_URL  || 'mongodb://localhost:27017/grcupomapi'
+var MONGO_URL = process.env.MONGO_URL  
 
 //iniciando o APP
 const app = express()
 app.use(express.json()) //permitir que eu envie dados para aplicação em formato de json.
-
+app.use(cors())
 
 mongoose.set('useFindAndModify', false);
 
@@ -22,7 +22,7 @@ mongoose.connect(MONGO_URL, {
 requireDir('./src/models')
 
 
-app.use(cors())
+
 // Rotas
 app.use('/', require('./src/routes'))
 
