@@ -14,8 +14,8 @@ app.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
+app.use(cors());
 
-app.use(express.json())
 
 mongoose.set('useFindAndModify', false);
 
@@ -26,7 +26,9 @@ mongoose.connect(MONGO_URL, {
     useNewUrlParser: true
 })
 
-app.use(cors());
+
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 
 requireDir('./src/models')
 
