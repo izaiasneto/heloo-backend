@@ -6,7 +6,7 @@ const requireDir = require("require-dir")
 var MONGO_URL = process.env.MONGO_URL  
 
 var app = express();
-
+app.use(express.json())
 
 mongoose.set('useFindAndModify', false);
 
@@ -16,9 +16,8 @@ mongoose.connect(MONGO_URL, {
     useUnifiedTopology: true,
     useNewUrlParser: true
 })
-app.use(cors());
 
-app.use(express.json())
+app.use(cors());
 
 requireDir('./src/models')
 
