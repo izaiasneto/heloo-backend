@@ -24,7 +24,7 @@ app.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
-app.use(cors());
+app.use(cors({origin: 'http://localhost:3000'}));
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
