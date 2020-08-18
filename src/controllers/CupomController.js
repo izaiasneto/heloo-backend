@@ -10,45 +10,45 @@ module.exports = {
     async index(req, res) {//
        
         let result = []
-
-        if(req.query.situation && req.query.dateMax && req.query.dateMin ){
-      
-            let dateMax = moment(new Date(convertDate(req.query.dateMax))).format('YYYY-MM-DD[T00:00:00.000Z]')
-            let dateMin = moment(new Date(convertDate(req.query.dateMin))).format('YYYY-MM-DD[T00:00:00.000Z]')
-
-            result = await Cupom.find({
-                'situation': { $eq: req.query.situation},
-                'date_max': { $lte: dateMax},
-                'date_min': { $gt: dateMin} 
-            })
-                
-      } 
-        //filtering by situation
-        else if(req.query.situation){
-            
-            result  = await Cupom.find(
-                {'situation': { $eq: req.query.situation }}) 
-                  
-        } 
+        try {
+            if(req.query.situation && req.query.dateMax && req.query.dateMin ){
         
-        // filtering by date range
-        else if(req.query.dateMax && req.query.dateMin ){
-      
                 let dateMax = moment(new Date(convertDate(req.query.dateMax))).format('YYYY-MM-DD[T00:00:00.000Z]')
                 let dateMin = moment(new Date(convertDate(req.query.dateMin))).format('YYYY-MM-DD[T00:00:00.000Z]')
 
-                result = await Cupom.find({ 
+                result = await Cupom.find({
+                    'situation': { $eq: req.query.situation},
                     'date_max': { $lte: dateMax},
                     'date_min': { $gt: dateMin} 
                 })
                     
         } 
-        //show all
-        else {
-            result = await Cupom.find()     
-        }
+            //filtering by situation
+            else if(req.query.situation){
+                
+                result  = await Cupom.find(
+                    {'situation': { $eq: req.query.situation }}) 
+                    
+            } 
+            
+            // filtering by date range
+            else if(req.query.dateMax && req.query.dateMin ){
+        
+                    let dateMax = moment(new Date(convertDate(req.query.dateMax))).format('YYYY-MM-DD[T00:00:00.000Z]')
+                    let dateMin = moment(new Date(convertDate(req.query.dateMin))).format('YYYY-MM-DD[T00:00:00.000Z]')
 
-        try {
+                    result = await Cupom.find({ 
+                        'date_max': { $lte: dateMax},
+                        'date_min': { $gt: dateMin} 
+                    })
+                        
+            } 
+            //show all
+            else {
+                result = await Cupom.find()     
+            }
+
+            
             return res.json(result)
         } catch (err){
             response.status(400).json({
@@ -97,18 +97,22 @@ module.exports = {
 
     async update(req, res) {
 
-        if(req.body.situation === 'Usado'  ){
-            req.body.use_date = moment(new Date()).format('YYYY-MM-DD')
-        } else if (req.body.situation === 'Expirado'){
-            req.body.use_date =  ''
-        } else {
-            req.body.use_date = ''
-        }
+        try {
+            if(req.body.situation === 'Usado'  ){
+                req.body.use_date = moment(new Date()).format('YYYY-MM-DD')
+            } else if (req.body.situation === 'Expirado'){
+                req.body.use_date =  ''
+            } else {
+                req.body.use_date = ''
+            }
 
-        const cupom = await Cupom.findByIdAndUpdate(req.params._id, req.body, { new: true})
-    
-        return res.json(cupom)
+            const cupom = await Cupom.findByIdAndUpdate(req.params._id, req.body, { new: true})
+            return res.json(cupom)
+        }  catch (err) {
+            console.log(err)
+        }
     },
+
 
     async destroy(req, res){
         await Cupom.findByIdAndRemove(req.params._id)
