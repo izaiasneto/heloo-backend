@@ -89,8 +89,7 @@ module.exports = {
 
             const cupom = await Cupom.create(req.body)
 
-            res.json(cupom)
-            return res.sendStatus(200);
+            return res.json(cupom)
         } catch (err) {
             console.log(err)
         }
@@ -108,9 +107,7 @@ module.exports = {
 
         const cupom = await Cupom.findByIdAndUpdate(req.params._id, req.body, { new: true})
     
-        res.json(cupom)
-
-        return res.sendStatus(200);
+        return res.json(cupom)
     },
 
     async destroy(req, res){
