@@ -97,13 +97,7 @@ module.exports = {
 
     async update(req, res) {
 
-        if(req.body.situation === 'Usado'  ){
-            req.body.use_date = moment(new Date()).format('YYYY-MM-DD')
-        } else if (req.body.situation === 'Expirado'){
-            req.body.use_date =  ''
-        } else {
-            req.body.use_date = ''
-        }
+      
 
         const cupom = await Cupom.findByIdAndUpdate(req.params._id, req.body, { new: true})
     
