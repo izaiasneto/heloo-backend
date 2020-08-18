@@ -5,10 +5,10 @@ const requireDir = require("require-dir")
 
 var MONGO_URL = process.env.MONGO_URL  
 
-//iniciando o APP
-const app = express()
-app.use(express.json()) //permitir que eu envie dados para aplicação em formato de json.
-app.use(cors())
+
+let app = express();
+app.use(cors());
+app.options('*', cors());
 
 mongoose.set('useFindAndModify', false);
 
