@@ -6,19 +6,18 @@ const requireDir = require("require-dir")
 var MONGO_URL = process.env.MONGO_URL  
 
 var app = express();
+
+app.all('*', function(req, res, next) {
+    var Origin = req.get('Origin'); 
+    res.header('Access-Control-Allow-Origin', Origin);
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
+
 app.use(express.json())
 
-// CORS
-app.all('/*', function(request, response, next) {
-    response.header("Access-Control-Allow-Origin", "*");
-    response.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
-    response.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
-    if (request.method == 'OPTIONS') {
-      response.status(200).end();
-    } else {
-      next();
-    }
-  });
+app.use(cors());
 
 mongoose.set('useFindAndModify', false);
 
