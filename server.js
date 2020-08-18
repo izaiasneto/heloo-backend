@@ -6,11 +6,8 @@ const requireDir = require("require-dir")
 var MONGO_URL = process.env.MONGO_URL  
 
 var app = express();
-const corsOptions = {
-    origin: true,
-    credentials: true
-  }
-app.options('*', cors(corsOptions)); // preflight OPTIONS; put before other routes
+
+app.use(cors());
 
 mongoose.set('useFindAndModify', false);
 
@@ -21,7 +18,7 @@ mongoose.connect(MONGO_URL, {
     useNewUrlParser: true
 })
 
-
+app.use(cors());
 
 requireDir('./src/models')
 
