@@ -17,7 +17,9 @@ mongoose.connect(MONGO_URL, {
     useNewUrlParser: true
 })
 app.use(cors());
+
 app.use(express.json())
+
 requireDir('./src/models')
 
 // Rotas
