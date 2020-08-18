@@ -6,18 +6,11 @@ const requireDir = require("require-dir")
 var MONGO_URL = process.env.MONGO_URL  
 
 var app = express();
-
-app.all('*', function(req, res, next) {
-    var Origin = req.get('Origin'); 
-    res.header('Access-Control-Allow-Origin', Origin);
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-});
-
-app.use(express.json())
-
-app.use(cors());
+const corsOptions = {
+    origin: true,
+    credentials: true
+  }
+app.options('*', cors(corsOptions)); // preflight OPTIONS; put before other routes
 
 mongoose.set('useFindAndModify', false);
 
