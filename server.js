@@ -9,6 +9,13 @@ var MONGO_URL = process.env.MONGO_URL  || 'mongodb://localhost:27017/grcupomapi'
 const app = express()
 app.use(express.json()) //permitir que eu envie dados para aplicação em formato de json.
 app.use(cors())
+// Enable CORS
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    next();
+});
 mongoose.set('useFindAndModify', false);
 
 // Iniciando o DB
@@ -20,13 +27,7 @@ mongoose.connect(MONGO_URL, {
 
 requireDir('./src/models')
 
-// Enable CORS
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    next();
-});
+
 
 // Rotas
 app.use('/', require('./src/routes'))
