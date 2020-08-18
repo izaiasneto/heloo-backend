@@ -7,8 +7,6 @@ var MONGO_URL = process.env.MONGO_URL
 
 var app = express();
 
-app.use(cors());
-
 mongoose.set('useFindAndModify', false);
 
 // Iniciando o DB
@@ -20,6 +18,7 @@ mongoose.connect(MONGO_URL, {
 
 requireDir('./src/models')
 
+app.use(cors());
 
 // Rotas
 app.use('/', require('./src/routes'))
