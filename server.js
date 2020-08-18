@@ -18,9 +18,6 @@ mongoose.connect(MONGO_URL, {
 
 
 app.use(cors());
-app.options('/cupons', (req, res) => {
-    res.sendStatus(204);
-});
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 

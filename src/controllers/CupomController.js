@@ -77,14 +77,12 @@ module.exports = {
         const dateNew = convertDate(req.body.date_max)
             req.body.date_max = moment(new Date(dateNew)).format('YYYY-MM-DD')
 
-        try{      
+           
 
             const cupom = await Cupom.create(req.body)
 
             return res.json(cupom)
-        } catch (err) {
-            console.log(err)
-        }
+        
     },
 
     async update(req, res) {
