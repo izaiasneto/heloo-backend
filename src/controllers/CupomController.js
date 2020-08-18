@@ -66,26 +66,18 @@ module.exports = {
 
     async store(req, res) {
         
+        if(req.body.situation === 'Usado'  ){
+            req.body.use_date = moment(new Date()).format('YYYY-MM-DD')
+        } else if (req.body.situation === 'Expirado'){
+            req.body.use_date =  ''
+        } else {
+            req.body.use_date = ''
+        }
 
-        try{ 
-            
-            if(req.body.situation === 'Usado'  ){
-                req.body.use_date = moment(new Date()).format('YYYY-MM-DD')
-            } else if (req.body.situation === 'Expirado'){
-                req.body.use_date =  ''
-            } else {
-                req.body.use_date = ''
-            }
-
-            
-            /*if(req.body.use_date){
-                let dateNew2 = convertDate(req.body.use_date)
-                req.body.use_date =  moment(new Date(dateNew2)).format('YYYY-MM-DD')
-            }*/
-            
-            //Converter Data
-            const dateNew = convertDate(req.body.date_max)
+        const dateNew = convertDate(req.body.date_max)
             req.body.date_max = moment(new Date(dateNew)).format('YYYY-MM-DD')
+
+        try{      
 
             const cupom = await Cupom.create(req.body)
 
@@ -96,19 +88,17 @@ module.exports = {
     },
 
     async update(req, res) {
-
+        if(req.body.situation === 'Usado'  ){
+            req.body.use_date = moment(new Date()).format('YYYY-MM-DD')
+        } else if (req.body.situation === 'Expirado'){
+            req.body.use_date =  ''
+        } else {
+            req.body.use_date = ''
+        }
         try {
-            if(req.body.situation === 'Usado'  ){
-                req.body.use_date = moment(new Date()).format('YYYY-MM-DD')
-            } else if (req.body.situation === 'Expirado'){
-                req.body.use_date =  ''
-            } else {
-                req.body.use_date = ''
-            }
-
             const cupom = await Cupom.findByIdAndUpdate(req.params._id, req.body, { new: true})
             return res.json(cupom)
-        }  catch (err) {
+        } catch (err) {
             console.log(err)
         }
     },
