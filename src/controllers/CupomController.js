@@ -34,13 +34,13 @@ module.exports = {
             // filtering by date range
             else if(req.query.dateMax && req.query.dateMin ){
         
-                    let dateMax = moment(new Date(convertDate(req.query.dateMax))).format('YYYY-MM-DD[T00:00:00.000Z]')
-                    let dateMin = moment(new Date(convertDate(req.query.dateMin))).format('YYYY-MM-DD[T00:00:00.000Z]')
+                let dateMax = moment(new Date(convertDate(req.query.dateMax))).format('YYYY-MM-DD[T00:00:00.000Z]')
+                let dateMin = moment(new Date(convertDate(req.query.dateMin))).format('YYYY-MM-DD[T00:00:00.000Z]')
 
-                    result = await Cupom.find({ 
-                        'date_max': { $lte: dateMax},
-                        'date_min': { $gt: dateMin} 
-                    })
+                result = await Cupom.find({ 
+                    'date_max': { $lte: dateMax},
+                    'date_min': { $gt: dateMin} 
+                })
                         
             } 
             //show all
@@ -75,20 +75,22 @@ module.exports = {
             req.body.use_date = ''
         }
 
-        const dateNew = convertDate(req.body.date_max)
-            req.body.date_max = moment(new Date(dateNew)).format('YYYY-MM-DD')
+        
+        req.body.date_max = moment(new Date(convertDate(req.body.date_max))).format('YYYY-MM-DD')
 
         try{      
 
             const cupom = await Cupom.create(req.body)
 
             return res.send({cupom})
+
         } catch (err) {
             console.log(err)
         }
     },
 
     async update(req, res) {
+
         if(req.body.situation === 'Usado'  ){
             req.body.use_date = moment(new Date()).format('YYYY-MM-DD')
         } else if (req.body.situation === 'Expirado'){
