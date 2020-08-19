@@ -25,10 +25,6 @@ const CupomSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    date_min:{
-        type: Date,
-        default: Date.now
-    }
     
 })
 

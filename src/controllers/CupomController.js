@@ -13,13 +13,12 @@ module.exports = {
         try {
             if(req.query.situation && req.query.dateMax && req.query.dateMin ){
         
-                let dateMax = moment(new Date(convertDate(req.query.dateMax))).format('YYYY-MM-DD[T00:00:00.000Z]')
-                let dateMin = moment(new Date(convertDate(req.query.dateMin))).format('YYYY-MM-DD[T00:00:00.000Z]')
+                let dateMax = moment(new Date(convertDate(req.query.dateMax))).format('YYYY-MM-DD')
+                let dateMin = moment(new Date(convertDate(req.query.dateMin))).format('YYYY-MM-DD')
 
                 result = await Cupom.find({
                     'situation': { $eq: req.query.situation},
-                    'date_max': { $lte: dateMax},
-                    'date_min': { $gt: dateMin} 
+                    'date_max': { $in: [dateMin, dateMax]},
                 })
                     
         } 
@@ -32,14 +31,17 @@ module.exports = {
             } 
             
             // filtering by date range
-            else if(req.query.dateMax && req.query.dateMin ){
+            else if(req.query.dateMax && req.query.dateMin){
         
-                let dateMax = moment(new Date(convertDate(req.query.dateMax))).format('YYYY-MM-DD[T00:00:00.000Z]')
-                let dateMin = moment(new Date(convertDate(req.query.dateMin))).format('YYYY-MM-DD[T00:00:00.000Z]')
+                let dateMax = moment(new Date(convertDate(req.query.dateMax))).format('YYYY-MM-DD')
+                let dateMin = moment(new Date(convertDate(req.query.dateMin))).format('YYYY-MM-DD')
 
-                result = await Cupom.find({ 
-                    'date_max': { $lte: dateMax},
-                    'date_min': { $gt: dateMin} 
+                console.log(dateMin)
+                console.log(dateMax)
+                
+                result = await Cupom.find({
+                    'date_max': { $in: [dateMin, dateMax]},
+                                      
                 })
                         
             } 
@@ -90,7 +92,7 @@ module.exports = {
     },
 
     async update(req, res) {
-
+        
         if(req.body.situation === 'Usado'  ){
             req.body.use_date = moment(new Date()).format('YYYY-MM-DD')
         } else if (req.body.situation === 'Expirado'){
