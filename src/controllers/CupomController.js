@@ -35,9 +35,6 @@ module.exports = {
         
                 let dateMax = moment(new Date(convertDate(req.query.dateMax))).format('YYYY-MM-DD')
                 let dateMin = moment(new Date(convertDate(req.query.dateMin))).format('YYYY-MM-DD')
-
-                console.log(dateMin)
-                console.log(dateMax)
                 
                 result = await Cupom.find({
                     'date_max': { $gte : dateMin, $lte: dateMax },
