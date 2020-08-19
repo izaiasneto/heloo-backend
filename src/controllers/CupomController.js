@@ -18,7 +18,7 @@ module.exports = {
 
                 result = await Cupom.find({
                     'situation': { $eq: req.query.situation},
-                    'date_max': { $in: [dateMin, dateMax]},
+                    'date_max': { $gte : dateMin, $lte: dateMax },
                 })
                     
         } 
@@ -40,7 +40,7 @@ module.exports = {
                 console.log(dateMax)
                 
                 result = await Cupom.find({
-                    'date_max': { $in: [dateMin, dateMax]},
+                    'date_max': { $gte : dateMin, $lte: dateMax },
                                       
                 })
                         
