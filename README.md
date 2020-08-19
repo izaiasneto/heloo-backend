@@ -11,7 +11,7 @@
 <pre>docker pull mongo</pre>
 
 - Novo container da instalacao
-<pre>docker run --name mongodb -p27017:27017 -d mongo</pre>
+<pre>docker run --name mongodb -p 27017:27017 -d mongo</pre>
 
 - Retornar as imagens que estão rodando
 <pre>docker ps</pre>
