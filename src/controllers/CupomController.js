@@ -68,14 +68,9 @@ module.exports = {
         
         if(req.body.situation === 'Usado'  ){
             req.body.use_date = moment(new Date()).format('YYYY-MM-DD')
-        } else if (req.body.situation === 'Expirado'){
-            req.body.use_date =  ''
         } else {
-            req.body.use_date = ''
-        }
-
-        
-        req.body.date_max = moment(new Date(convertDate(req.body.date_max))).format('YYYY-MM-DD')
+            req.body.use_date =  ''
+        } 
 
         try{      
 
@@ -92,11 +87,10 @@ module.exports = {
         
         if(req.body.situation === 'Usado'  ){
             req.body.use_date = moment(new Date()).format('YYYY-MM-DD')
-        } else if (req.body.situation === 'Expirado'){
-            req.body.use_date =  ''
         } else {
-            req.body.use_date = ''
-        }
+            req.body.use_date =  ''
+        } 
+        
         try {
             const cupom = await Cupom.findByIdAndUpdate(req.params._id, req.body, { new: true})
             return res.send({cupom})
